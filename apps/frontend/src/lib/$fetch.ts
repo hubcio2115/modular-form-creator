@@ -3,4 +3,5 @@ import { env } from "@lib/env";
 
 export const $fetch = createFetch({
   baseURL: env.VITE_API_URL,
+  throw: true,
 });
