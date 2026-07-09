@@ -2,14 +2,16 @@
   "name": "modular-form-creator",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "pnpm@11.10.0",
   "scripts": {
-    "dev": "pnpm --filter modular-form-creator-frontend dev",
-    "build": "pnpm -r build",
-    "lint": "pnpm -r lint",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "prettier": "3.9.4"
+    "prettier": "3.9.4",
+    "turbo": "2.10.4"
   }
 }

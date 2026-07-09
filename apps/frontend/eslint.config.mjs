@@ -21,6 +21,10 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // TypeScript already does this
+      "@typescript-eslint/no-unused-vars": "off",
+    },
   },
   prettier,
   ...storybook.configs["flat/recommended"],
