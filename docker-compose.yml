@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./backend
+    build: ./apps/backend
     container_name: modular-form-creator-backend
     ports:
       - "5001:5001"

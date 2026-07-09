@@ -1,3 +1,2 @@
-./
-backend
-design-system
+apps/backend
+apps/frontend/src/design-system
