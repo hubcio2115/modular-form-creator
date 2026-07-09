@@ -42,7 +42,7 @@ Deliver a frontend that reproduces the intended resource lifecycle and behavior 
 
 - Do not modify backend code.
 - Do not modify design system code.
-- Allowed changes are frontend app code in [src](modular-form-creator/src), routing/state/form logic, and frontend dependencies.
+- Allowed changes are frontend app code in [apps/frontend/src](apps/frontend/src), routing/state/form logic, and frontend dependencies.
 
 ## 2. Technical Details
 
@@ -57,7 +57,7 @@ docker compose up -d
 Backend base URL: `http://localhost:5001`  
 Swagger UI: `http://localhost:5001/docs`
 
-API behavior and endpoint details: [backend/README.md](modular-form-creator/backend/README.md)
+API behavior and endpoint details: [apps/backend/README.md](apps/backend/README.md)
 
 ### Routing requirements
 
@@ -79,7 +79,7 @@ API behavior and endpoint details: [backend/README.md](modular-form-creator/back
 
 ### API contract requirements
 
-- Use backend API exactly as documented in [backend/README.md](modular-form-creator/backend/README.md).
+- Use backend API exactly as documented in [apps/backend/README.md](apps/backend/README.md).
 - Do not change backend contracts.
 
 ### Core business rules
