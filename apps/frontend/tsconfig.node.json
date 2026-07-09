@@ -7,6 +7,13 @@
     "types": ["node"],
     "skipLibCheck": true,
 
+    /* Path aliases */
+    "paths": {
+      "~/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
