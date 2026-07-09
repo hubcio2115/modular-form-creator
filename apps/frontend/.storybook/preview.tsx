@@ -1,14 +1,14 @@
-import type { Preview } from '@storybook/react-vite'
-import { ThemeProvider } from 'styled-components'
-import { GlobalStyles } from '../src/design-system/theme/GlobalStyles'
-import { theme } from '../src/design-system/theme/theme'
+import type { Preview } from "@storybook/react-vite";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "../src/design-system/theme/GlobalStyles";
+import { theme } from "../src/design-system/theme/theme";
 
 const preview: Preview = {
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <div style={{ padding: '24px' }}>
+        <div style={{ padding: "24px" }}>
           <Story />
         </div>
       </ThemeProvider>
@@ -22,9 +22,9 @@ const preview: Preview = {
       },
     },
     a11y: {
-      test: 'todo',
+      test: "todo",
     },
   },
-}
+};
 
-export default preview
+export default preview;
