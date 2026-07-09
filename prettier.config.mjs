@@ -6,8 +6,8 @@ const config = {
   semi: true,
   tabWidth: 2,
   bracketSpacing: true,
-  trailingComma: 'all',
+  trailingComma: "all",
   printWidth: 120,
-}
+};
 
-export default config
+export default config;
