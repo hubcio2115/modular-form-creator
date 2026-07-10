@@ -1,8 +1,11 @@
-export interface PaginationParams {
-  page: number;
-  pageSize: number;
-  sortOrder: "desc" | "asc";
-}
+import { parseAsInteger, parseAsStringEnum, type inferParserType } from "nuqs";
+
+export const paginationParams = {
+  pageSize: parseAsInteger.withDefault(10),
+  sortOrder: parseAsStringEnum(["desc", "asc"]).withDefault("desc"),
+};
+
+export type PaginationParams = inferParserType<typeof paginationParams>;
 
 export interface PaginatedResponse<T> {
   items: T[];
@@ -18,3 +21,7 @@ export interface ErrorResponse {
   message: string;
   details: Record<string, unknown>;
 }
+
+export type Nullable<T> = {
+  [K in keyof T]: T[K] | null;
+};

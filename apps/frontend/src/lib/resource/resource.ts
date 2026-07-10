@@ -1,5 +1,6 @@
 import { z } from "zod/mini";
-import { $fetch } from "../$fetch";
+import { $fetch } from "@lib/$fetch";
+import type { Nullable, PaginatedResponse, PaginationParams } from "@lib/types";
 
 export const resourceSchema = z.object({
   _id: z.string(),
@@ -12,7 +13,7 @@ export const resourceSchema = z.object({
     owner: z.string(),
     email: z.string(),
     description: z.string(),
-    priority: z.enum(["low"]),
+    priority: z.enum(["low", "medium", "high"]),
   }),
 
   projectDetails: z.object({
@@ -30,6 +31,12 @@ export type Resource = z.infer<typeof resourceSchema>;
 
 export function getById(id: Resource["resourceId"]) {
   return $fetch<Resource>(`/api/resources/${id}`);
+}
+
+export function list(params: PaginationParams & Nullable<Pick<Resource, "status" | "name">> & { page: number }) {
+  return $fetch<PaginatedResponse<Resource>>("/api/resources", {
+    query: params,
+  });
 }
 
 export function createResource(name: Resource["name"]) {
