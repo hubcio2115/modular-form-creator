@@ -16,6 +16,8 @@
     "@t3-oss/env-core": "^0.13.11",
     "@tanstack/react-query": "^5.101.2",
     "@tanstack/react-query-devtools": "^5.101.2",
+    "@uidotdev/usehooks": "^2.4.1",
+    "eslint-plugin-react": "^7.37.5",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-router": "8.2.0",
