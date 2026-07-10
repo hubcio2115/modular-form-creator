@@ -1,8 +1,12 @@
 import { createBrowserRouter } from "react-router";
-import Home from "./pages/home/Home";
-import { loader as homeLoader } from "./pages/home/homeLoader";
+
 import RootLayout from "./layouts/root-layout";
 import { queryClient } from "@lib/query-client";
+
+import Home from "./pages/home/Home";
+import { loader as homeLoader } from "./pages/home/homeLoader";
+
+import RouteError from "./pages/error/RouteError";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +17,14 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home,
         loader: homeLoader(queryClient),
+      },
+
+      {
+        path: "*",
+        loader: () => {
+          throw new Response("Page not found", { status: 404, statusText: "Not Found" });
+        },
+        ErrorBoundary: RouteError,
       },
     ],
   },
