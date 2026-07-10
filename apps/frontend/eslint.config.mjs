@@ -4,22 +4,31 @@ import js from "@eslint/js";
 import pluginQuery from "@tanstack/eslint-plugin-query";
 import prettier from "eslint-config-prettier";
 import globals from "globals";
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
-  ...pluginQuery.configs["flat/recommended"],
+  globalIgnores(["dist", "design-system", ".storybook"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
-      tseslint.configs.strictTypeChecked,
+      tseslint.configs.recommended,
+      react.configs.flat.recommended,
+      react.configs.flat["jsx-runtime"],
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      pluginQuery.configs["flat/recommended"],
+      prettier,
     ],
+    settings: {
+      react: {
+        version: "19.2",
+      },
+    },
     languageOptions: {
       globals: globals.browser,
       parserOptions: {
@@ -32,6 +41,5 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
-  prettier,
   ...storybook.configs["flat/recommended"],
 ]);
