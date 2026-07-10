@@ -1,15 +1,17 @@
 import { useQueryStates } from "nuqs";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { paginatedResourceParams } from "./homeLoader";
-import { Button, Input, Select } from "@components/design-system";
+import { Button, Drawer, Input, Select } from "@components/design-system";
 import type { Resource } from "~/lib/resource/resource";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import ResourceList from "~/lib/resource/ResourceList";
 import ResourceListError from "~/lib/resource/ResourceListError";
+import CreateResourceForm from "~/lib/resource/CreateResourceForm";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryErrorResetBoundary, useIsFetching } from "@tanstack/react-query";
 import { resourceQueryOptions } from "~/lib/resource/resource.queries";
+import { Spinner } from "~/components/Spinner";
 
 const statusOptions = [
   { value: "", label: "All statuses" },
@@ -34,10 +36,16 @@ export default function Home() {
 
   const isFetching = useIsFetching({ queryKey: [resourceQueryOptions.all] }) > 0;
 
+  const [isCreateOpen, setCreateOpen] = useState(false);
+
+  function toggleCreateOpen() {
+    setCreateOpen((prev) => !prev);
+  }
+
   return (
     <AppShell>
       <ListContainer>
-        <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+        <TopRow>
           <SearchField>
             <Input
               label="Search"
@@ -48,8 +56,10 @@ export default function Home() {
             />
           </SearchField>
 
-          <Button style={{ alignSelf: "flex-end", maxHeight: "max-content" }}>Add</Button>
-        </div>
+          <Button style={{ alignSelf: "flex-end", maxHeight: "max-content" }} onClick={toggleCreateOpen}>
+            Add
+          </Button>
+        </TopRow>
 
         <FiltersRow>
           <StatusField>
@@ -89,13 +99,17 @@ export default function Home() {
                 fallbackRender={({ resetErrorBoundary }) => <ResourceListError onRetry={resetErrorBoundary} />}
               >
                 <Dimmable $dimmed={isFetching}>
-                  <ResourceList searchParams={searchParams} />
+                  <ResourceList searchParams={searchParams} onCreate={toggleCreateOpen} />
                 </Dimmable>
               </ErrorBoundary>
             )}
           </QueryErrorResetBoundary>
         </ListRegion>
       </ListContainer>
+
+      <Drawer title="Create resource" isOpen={isCreateOpen} onClose={toggleCreateOpen}>
+        <CreateResourceForm onSuccess={toggleCreateOpen} />
+      </Drawer>
     </AppShell>
   );
 }
@@ -120,6 +134,12 @@ const ListContainer = styled.div`
   @media (min-width: 768px) {
     max-width: 640px;
   }
+`;
+
+const TopRow = styled.div`
+  display: flex;
+  gap: 1rem;
+  width: 100%;
 `;
 
 const SearchField = styled.div`
@@ -161,17 +181,4 @@ const SpinnerOverlay = styled.div`
 const Dimmable = styled.div<{ $dimmed: boolean }>`
   opacity: ${({ $dimmed }) => ($dimmed ? 0.5 : 1)};
   transition: opacity 0.2s ease;
-`;
-
-const spin = keyframes`to { transform: rotate(360deg); }`;
-
-const Spinner = styled.div`
-  position: sticky;
-  top: 1rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: ${spin} 0.6s linear infinite;
 `;
