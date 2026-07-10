@@ -6,6 +6,9 @@ import { queryClient } from "@lib/query-client";
 import Home from "./pages/home/Home";
 import { loader as homeLoader } from "./pages/home/homeLoader";
 
+import ResourceDetailsPage from "./pages/resource/ResourceDetails";
+import { loader as resourceDetailsLoader } from "./pages/resource/resourceDetailsLoader";
+
 import RouteError from "./pages/error/RouteError";
 
 export const router = createBrowserRouter([
@@ -17,6 +20,13 @@ export const router = createBrowserRouter([
         index: true,
         Component: Home,
         loader: homeLoader(queryClient),
+      },
+
+      {
+        path: "resources/:resourceId",
+        Component: ResourceDetailsPage,
+        loader: resourceDetailsLoader(queryClient),
+        ErrorBoundary: RouteError,
       },
 
       {
