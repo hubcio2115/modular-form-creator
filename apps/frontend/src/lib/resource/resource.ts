@@ -33,6 +33,12 @@ export const resourceSchema = z.object({
 
 export type Resource = z.infer<typeof resourceSchema>;
 
+export function isBasicInfoComplete(basicInfo: Resource["basicInfo"]) {
+  return Boolean(
+    basicInfo.resourceName && basicInfo.owner && basicInfo.email && basicInfo.description && basicInfo.priority,
+  );
+}
+
 export function getById(id: Resource["resourceId"]) {
   return $fetch<Resource>(`/api/resources/${id}`);
 }
