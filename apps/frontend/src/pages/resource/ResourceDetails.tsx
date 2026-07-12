@@ -5,7 +5,7 @@ import { formatCurrency } from "@lib/formatCurrency";
 import type { BadgeVariant } from "@components/design-system";
 import { Field } from "./components/ResourceControls";
 import { Fields, Options, Section, SectionTitle } from "./components/ResourceLayout";
-import { useOutletContext } from "react-router";
+import { useResource } from "./useResource";
 
 const priorityVariant: Record<Exclude<Resource["basicInfo"]["priority"], "">, BadgeVariant> = {
   low: "neutral",
@@ -14,7 +14,7 @@ const priorityVariant: Record<Exclude<Resource["basicInfo"]["priority"], "">, Ba
 };
 
 export default function ResourceDetailsPage() {
-  const resource = useOutletContext<Resource>();
+  const resource = useResource();
   const { basicInfo, projectDetails } = resource;
 
   return (
