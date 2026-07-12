@@ -46,7 +46,7 @@ export const resourceMutationOptions = {
   patchProjectDetails: () =>
     mutationOptions({
       mutationKey: [resourceMutationOptions.all, "patchProjectDetails"],
-      mutationFn: (params: Pick<Resource, "resourceId" | "basicInfo">) => {
+      mutationFn: (params: Pick<Resource, "resourceId" | "projectDetails">) => {
         return patchProjectDetails(params);
       },
     }),

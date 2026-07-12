@@ -70,10 +70,13 @@ export function patchBasicInfo({ resourceId: id, basicInfo }: Pick<Resource, "re
   });
 }
 
-export function patchProjectDetails({ resourceId: id, basicInfo }: Pick<Resource, "resourceId" | "basicInfo">) {
+export function patchProjectDetails({
+  resourceId: id,
+  projectDetails,
+}: Pick<Resource, "resourceId" | "projectDetails">) {
   return $fetch(`/api/resources/${id}/project-details`, {
     method: "PATCH",
-    body: basicInfo,
+    body: projectDetails,
   });
 }
 
