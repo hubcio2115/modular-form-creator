@@ -39,6 +39,12 @@ export function isBasicInfoComplete(basicInfo: Resource["basicInfo"]) {
   );
 }
 
+export function isProjectDetailsComplete(projectDetails: Resource["projectDetails"]) {
+  return Boolean(
+    projectDetails.projectName && projectDetails.budget && projectDetails.category && projectDetails.options.length > 0,
+  );
+}
+
 export function getById(id: Resource["resourceId"]) {
   return $fetch<Resource>(`/api/resources/${id}`);
 }
