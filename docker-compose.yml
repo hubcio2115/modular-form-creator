@@ -1,4 +1,16 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:5001"
+    container_name: modular-form-creator-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
   backend:
     build: ./apps/backend
     container_name: modular-form-creator-backend
@@ -10,6 +22,7 @@ services:
       CORS_ORIGIN: "http://localhost:5173"
     depends_on:
       - mongo
+
   mongo:
     image: mongo:7
     container_name: modular-form-creator-mongo
