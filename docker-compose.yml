@@ -12,7 +12,9 @@ services:
       - backend
 
   backend:
-    build: ./apps/backend
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
     container_name: modular-form-creator-backend
     ports:
       - "5001:5001"
