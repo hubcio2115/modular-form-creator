@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 
 import RootLayout from "./layouts/root-layout";
 import { queryClient } from "@lib/query-client";
@@ -22,6 +22,11 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => redirect("/resources"),
+      },
+
+      {
+        path: "resources",
         Component: Home,
         loader: homeLoader(queryClient),
       },

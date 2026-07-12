@@ -37,7 +37,7 @@ export default function ResourceList({ searchParams, onCreate }: ResourceTablePr
   return (
     <Resources>
       {items.map((resource) => (
-        <ResourceLink key={resource.resourceId} to={`/resources/${resource.resourceId}`}>
+        <ResourceLink key={resource.resourceId} to={`/resources/${resource.resourceId}/`}>
           {({ isPending }) => (
             <CardSlot>
               <Dimmable $dimmed={isPending}>
