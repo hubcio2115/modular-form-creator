@@ -1,0 +1,7 @@
+- [x] List page
+- [ ] Resource overview page with module progress and actions?
+- [ ] Forms for:
+  - [ ] Basic info
+  - [ ] Project details
+- [x] Details/summary page
+- [ ] Status flow as defined

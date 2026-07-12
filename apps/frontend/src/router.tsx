@@ -6,7 +6,11 @@ import { queryClient } from "@lib/query-client";
 import Home from "./pages/home/Home";
 import { loader as homeLoader } from "./pages/home/homeLoader";
 
+import ResourceShellLayout from "./pages/resource/components/ResourceShell";
+import ResourceOverviewPage from "./pages/resource/ResourceOverview";
 import ResourceDetailsPage from "./pages/resource/ResourceDetails";
+import BasicInfoPage from "./pages/resource/BasicInfo";
+import ProjectDetailsPage from "./pages/resource/ProjectDetails";
 import { loader as resourceDetailsLoader } from "./pages/resource/resourceDetailsLoader";
 
 import RouteError from "./pages/error/RouteError";
@@ -24,9 +28,26 @@ export const router = createBrowserRouter([
 
       {
         path: "resources/:resourceId",
-        Component: ResourceDetailsPage,
+        Component: ResourceShellLayout,
         loader: resourceDetailsLoader(queryClient),
-        ErrorBoundary: RouteError,
+        children: [
+          {
+            index: true,
+            Component: ResourceOverviewPage,
+          },
+          {
+            path: "details",
+            Component: ResourceDetailsPage,
+          },
+          {
+            path: "basic-info",
+            Component: BasicInfoPage,
+          },
+          {
+            path: "project-details",
+            Component: ProjectDetailsPage,
+          },
+        ],
       },
 
       {
