@@ -10,6 +10,13 @@ export const basicInfoSchema = z.object({
   priority: z.enum(["low", "medium", "high", ""], { error: "Priority is required" }),
 });
 
+export const projectDetailsSchema = z.object({
+  projectName: z.string(),
+  budget: z.string(),
+  category: z.enum(["internal", "external", "vendor", ""], { error: "Category is required" }),
+  options: z.array(z.string()),
+});
+
 export const resourceSchema = z.object({
   _id: z.string(),
   resourceId: z.number(),
@@ -18,12 +25,7 @@ export const resourceSchema = z.object({
 
   basicInfo: basicInfoSchema,
 
-  projectDetails: z.object({
-    projectName: z.string(),
-    budget: z.string(),
-    category: z.string(),
-    options: z.array(z.string()),
-  }),
+  projectDetails: projectDetailsSchema,
 
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
