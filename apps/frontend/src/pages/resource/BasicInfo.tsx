@@ -2,6 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod/mini";
 import styled from "styled-components";
+import { Check } from "lucide-react";
 import { Button, Input, Select } from "@components/design-system";
 import type { SelectOption } from "@components/design-system";
 import { Spinner } from "@components/Spinner";
@@ -11,6 +12,7 @@ import { resourceQueryOptions } from "~/lib/resource/resource.queries";
 import { basicInfoSchema, type Resource } from "~/lib/resource/resource";
 import { Placeholder, Section, SectionTitle } from "./components/ResourceLayout";
 import { useResource } from "./useResource";
+import { useJustSaved } from "@lib/hooks/useJustSaved";
 
 const priorityOptions: SelectOption[] = [
   { value: "", label: "Select priority" },
@@ -36,6 +38,8 @@ export default function BasicInfoPage() {
   const resource = useResource();
 
   const isDraft = resource.status === "draft";
+
+  const [justSaved, markSaved] = useJustSaved();
 
   const { mutateAsync: patchBasicInfo } = useMutation({
     ...resourceMutationOptions.patchBasicInfo(),
@@ -71,6 +75,7 @@ export default function BasicInfoPage() {
       }
 
       form.reset(value);
+      markSaved();
     },
   });
 
@@ -157,16 +162,30 @@ export default function BasicInfoPage() {
 
         <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting, state.isDirty] as const}>
           {([canSubmit, isSubmitting, isDirty]) => (
-            <Button type="submit" fullWidth disabled={!canSubmit || !isDirty}>
-              {isSubmitting ? (
-                <>
-                  Saving... <ButtonSpinner />
-                </>
-              ) : isDraft ? (
-                "Save basic info"
-              ) : (
-                "Submit changes"
-              )}
+            <Button type="submit" fullWidth disabled={!canSubmit || !isDirty || justSaved}>
+              {(() => {
+                switch (true) {
+                  case isSubmitting:
+                    return (
+                      <>
+                        Saving... <ButtonSpinner />
+                      </>
+                    );
+
+                  case justSaved:
+                    return (
+                      <>
+                        Saved <CheckIcon />
+                      </>
+                    );
+
+                  case isDraft:
+                    return "Save basic info";
+
+                  default:
+                    return "Submit changes";
+                }
+              })()}
             </Button>
           )}
         </form.Subscribe>
@@ -182,6 +201,11 @@ const Form = styled.form`
 `;
 
 const ButtonSpinner = styled(Spinner)`
+  width: 1rem;
+  height: 1rem;
+`;
+
+const CheckIcon = styled(Check)`
   width: 1rem;
   height: 1rem;
 `;
