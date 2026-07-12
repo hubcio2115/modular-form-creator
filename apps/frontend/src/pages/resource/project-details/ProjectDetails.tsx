@@ -10,8 +10,8 @@ import { queryClient } from "@lib/query-client";
 import { resourceMutationOptions } from "~/lib/resource/resource.mutations";
 import { resourceQueryOptions } from "~/lib/resource/resource.queries";
 import { projectDetailsSchema, type Resource } from "~/lib/resource/resource";
-import { Placeholder, Section, SectionTitle } from "./components/ResourceLayout";
-import { useResource } from "./useResource";
+import { Placeholder, Section, SectionTitle } from "../components/ResourceLayout";
+import { useResource } from "../useResource";
 import { useJustSaved } from "@lib/hooks/useJustSaved";
 
 const categoryOptions: SelectOption[] = [

@@ -10,8 +10,9 @@ import ResourceShellLayout from "./pages/resource/components/ResourceShell";
 import ResourceOverviewPage from "./pages/resource/ResourceOverview";
 import ResourceDetailsPage from "./pages/resource/ResourceDetails";
 import BasicInfoPage from "./pages/resource/BasicInfo";
-import ProjectDetailsPage from "./pages/resource/ProjectDetails";
+import ProjectDetailsPage from "./pages/resource/project-details/ProjectDetails";
 import { loader as resourceDetailsLoader } from "./pages/resource/resourceDetailsLoader";
+import { loader as projectDetailsLoader } from "./pages/resource/project-details/projectDetailsLoader";
 
 import RouteError from "./pages/error/RouteError";
 
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
           {
             path: "project-details",
             Component: ProjectDetailsPage,
+            loader: projectDetailsLoader(queryClient),
           },
         ],
       },

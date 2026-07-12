@@ -34,7 +34,7 @@ function ResourceShell({ resourceId }: Pick<Resource, "resourceId">) {
         <Badge variant={resource.status === "completed" ? "success" : "info"}>{resource.status}</Badge>
       </Header>
 
-      <ResourceNav resourceId={resource.resourceId} />
+      <ResourceNav resource={resource} />
 
       <Outlet context={resource} />
     </DetailsCard>
