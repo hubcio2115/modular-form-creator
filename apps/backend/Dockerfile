@@ -1,15 +1,29 @@
-FROM node:20-alpine
+FROM node:24-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
+RUN corepack enable
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+FROM base AS pruner
+COPY . .
+RUN pnpx turbo@"$(node -p "require('./package.json').devDependencies.turbo")" prune modular-form-creator-backend --docker
 
-COPY tsconfig.json ./
-COPY src ./src
+FROM base AS installer
+COPY --from=pruner /app/out/json/ ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
 
-RUN npm run build
+COPY --from=pruner /app/out/full/ ./
+RUN pnpm turbo run build --filter=modular-form-creator-backend
 
+FROM base AS runner
+COPY --from=pruner /app/out/json/ ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --prod --frozen-lockfile
+
+COPY --from=installer /app/apps/backend/dist ./apps/backend/dist
+
+WORKDIR /app/apps/backend
 EXPOSE 5001
-
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/server.js"]
