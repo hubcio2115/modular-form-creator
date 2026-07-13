@@ -1,16 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { resourceQueryOptions } from "./resource.queries";
 import type { PaginatedResourceParams } from "~/pages/home/homeLoader";
-import { Link } from "react-router";
 import { Badge, Button, Card } from "~/components/design-system";
 import ResourceMessageCard from "./ResourceMessageCard";
 import { styled } from "styled-components";
 
 interface ResourceTableProps {
   searchParams: PaginatedResourceParams;
+  onCreate: () => void;
 }
 
-export default function ResourceList({ searchParams }: ResourceTableProps) {
+export default function ResourceList({ searchParams, onCreate }: ResourceTableProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(
     resourceQueryOptions.list(searchParams),
   );
@@ -26,9 +26,7 @@ export default function ResourceList({ searchParams }: ResourceTableProps) {
   if (items.length === 0) {
     return (
       <ResourceMessageCard title="There are no resources yet">
-        <Link to="/">
-          <Button>Create</Button>
-        </Link>
+        <Button onClick={onCreate}>Create</Button>
       </ResourceMessageCard>
     );
   }
