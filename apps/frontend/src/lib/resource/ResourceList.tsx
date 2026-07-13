@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { resourceQueryOptions } from "./resource.queries";
 import type { PaginatedResourceParams } from "~/pages/home/homeLoader";
 import { Badge, Button, Card } from "~/components/design-system";
@@ -14,6 +14,7 @@ interface ResourceTableProps {
 }
 
 export default function ResourceList({ searchParams, onCreate }: ResourceTableProps) {
+  const location = useLocation();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(
     resourceQueryOptions.list(searchParams),
   );
@@ -37,7 +38,11 @@ export default function ResourceList({ searchParams, onCreate }: ResourceTablePr
   return (
     <Resources>
       {items.map((resource) => (
-        <ResourceLink key={resource.resourceId} to={`/resources/${resource.resourceId}/`}>
+        <ResourceLink
+          key={resource.resourceId}
+          to={`/resources/${resource.resourceId}/`}
+          state={{ resourcesSearch: location.search }}
+        >
           {({ isPending }) => (
             <CardSlot>
               <Dimmable $dimmed={isPending}>

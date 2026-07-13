@@ -8,14 +8,11 @@ export function BackButton() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const canGoBack = location.key !== "default";
+  const state = location.state as { resourcesSearch?: string } | null;
+  const resourcesSearch = typeof state?.resourcesSearch === "string" ? state.resourcesSearch : "";
 
   function onClick() {
-    if (canGoBack) {
-      navigate(-1);
-    } else {
-      navigate("/resources");
-    }
+    navigate({ pathname: "/resources", search: resourcesSearch });
   }
 
   return (

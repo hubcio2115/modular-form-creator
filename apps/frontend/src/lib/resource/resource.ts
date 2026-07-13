@@ -2,19 +2,21 @@ import { z } from "zod/mini";
 import { $fetch } from "@lib/$fetch";
 import type { Nullable, PaginatedResponse, PaginationParams } from "@lib/types";
 
+export const basicInfoSchema = z.object({
+  resourceName: z.string(),
+  owner: z.string(),
+  email: z.string(),
+  description: z.string(),
+  priority: z.enum(["low", "medium", "high", ""], { error: "Priority is required" }),
+});
+
 export const resourceSchema = z.object({
   _id: z.string(),
   resourceId: z.number(),
   name: z.string(),
   status: z.enum(["draft", "completed"]),
 
-  basicInfo: z.object({
-    resourceName: z.string(),
-    owner: z.string(),
-    email: z.string(),
-    description: z.string(),
-    priority: z.enum(["low", "medium", "high", ""]),
-  }),
+  basicInfo: basicInfoSchema,
 
   projectDetails: z.object({
     projectName: z.string(),

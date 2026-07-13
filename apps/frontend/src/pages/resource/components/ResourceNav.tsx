@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import type { Resource } from "~/lib/resource/resource";
 
 const links = [
@@ -10,10 +10,12 @@ const links = [
 ];
 
 export function ResourceNav({ resourceId }: Pick<Resource, "resourceId">) {
+  const location = useLocation();
+
   return (
     <Nav aria-label="Resource sections">
       {links.map((link) => (
-        <NavItem key={link.to} to={`/resources/${resourceId}/${link.to}`} end={link.end}>
+        <NavItem key={link.to} to={`/resources/${resourceId}/${link.to}`} end={link.end} replace state={location.state}>
           {link.label}
         </NavItem>
       ))}
