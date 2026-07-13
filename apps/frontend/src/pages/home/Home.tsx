@@ -12,6 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { QueryErrorResetBoundary, useIsFetching } from "@tanstack/react-query";
 import { resourceQueryOptions } from "~/lib/resource/resource.queries";
 import { Spinner } from "~/components/Spinner";
+import { Dimmable } from "~/components/Dimmable";
 
 const statusOptions = [
   { value: "", label: "All statuses" },
@@ -178,7 +179,3 @@ const SpinnerOverlay = styled.div`
   pointer-events: none;
 `;
 
-const Dimmable = styled.div<{ $dimmed: boolean }>`
-  opacity: ${({ $dimmed }) => ($dimmed ? 0.5 : 1)};
-  transition: opacity 0.2s ease;
-`;

@@ -4,7 +4,7 @@ import type { Nullable, PaginatedResponse, PaginationParams } from "@lib/types";
 
 export const resourceSchema = z.object({
   _id: z.string(),
-  resourceId: z.string(),
+  resourceId: z.number(),
   name: z.string(),
   status: z.enum(["draft", "completed"]),
 
@@ -13,7 +13,7 @@ export const resourceSchema = z.object({
     owner: z.string(),
     email: z.string(),
     description: z.string(),
-    priority: z.enum(["low", "medium", "high"]),
+    priority: z.enum(["low", "medium", "high", ""]),
   }),
 
   projectDetails: z.object({
@@ -23,8 +23,8 @@ export const resourceSchema = z.object({
     options: z.array(z.string()),
   }),
 
-  createdAt: z.iso.date(),
-  updatedAt: z.iso.date(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
 });
 
 export type Resource = z.infer<typeof resourceSchema>;

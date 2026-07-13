@@ -23,11 +23,6 @@ export const resourceQueryOptions = {
         const { page, totalPages } = lastPage.pagination;
         return page < totalPages ? page + 1 : undefined;
       },
-      placeholderData: (previousData, previousQuery) => {
-        const previousParams = previousQuery?.queryKey[1] as typeof params | undefined;
-        const sameFilter = previousParams?.status === params.status && previousParams?.sortOrder === params.sortOrder;
-        return sameFilter ? previousData : undefined;
-      },
       throwOnError: true,
     }),
 };
