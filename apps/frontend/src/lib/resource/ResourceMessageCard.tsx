@@ -5,11 +5,9 @@ import { styled } from "styled-components";
 interface ResourceMessageCardProps {
   title: string;
   message?: string;
-  /** Optional action, e.g. a retry or create button. */
   children?: ReactNode;
 }
 
-/** Centered card used for the list's empty, no-results, and error states. */
 export default function ResourceMessageCard({ title, message, children }: ResourceMessageCardProps) {
   return (
     <Card>
